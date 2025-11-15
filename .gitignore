@@ -1,0 +1,11 @@
+# Fichiers de cache
+*.json
+!*sample.json
+
+# Fichiers Python
+__pycache__/
+*.pyc
+
+# Fichiers OS
+.DS_Store
+Thumbs.db
