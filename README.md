@@ -1,124 +1,140 @@
 # CISA KEV Analyzer 🛡️
 
-Cet outil est un script Python en ligne de commande permettant d'interroger, d'analyser et d'enrichir le catalogue **Known Exploited Vulnerabilities (KEV)** de CISA.
+This tool is a Python command-line script to query, analyze, and enrich the CISA **Known Exploited Vulnerabilities (KEV)** catalog.
 
-À l'origine un simple challenge technique pour un entretien de stage, ce projet a été étendu pour devenir un outil de portfolio complet, démontrant la gestion d'API, la mise en cache, l'enrichissement de données (via NVD) et une sortie structurée.
+Originally a simple technical challenge for an internship interview, this project was expanded into a complete portfolio piece, demonstrating API management, caching, data enrichment (via NVD), and structured output.
 
----
+-----
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-* **Interrogation du KEV** : Récupère la liste la plus récente des vulnérabilités activement exploitées.
-* **Mise en cache intelligente** : Un cache local pour les données KEV et CVSS afin de minimiser les appels API et d'accélérer les exécutions.
-* **Enrichissement CVSS (Idée 1)** : Interroge l'API NVD 2.0 du NIST pour récupérer le **score CVSS** et le niveau de **sévérité** pour les vulnérabilités trouvées.
-* **Filtrage avancé** : Filtrez les résultats par :
-    * Nombre de jours (`-d`)
-    * Nombre de résultats (`-n`)
-    * Fournisseur (`-s` ou `--search-vendor`)
-* **Statistiques des fournisseurs** : Affiche un Top `N` des fournisseurs les plus présents dans le catalogue KEV.
-* **Formats de sortie multiples (Idée 2)** : Affichez les résultats dans la `console` ou exportez-les en `json` ou `csv` pour les intégrer à d'autres outils.
+  * **KEV Querying**: Fetches the most recent list of actively exploited vulnerabilities.
+  * **Smart Caching**: Uses a local cache for both KEV and CVSS data to minimize API calls and speed up executions.
+  * **CVSS Enrichment (Idea 1)**: Queries the NIST NVD 2.0 API to retrieve the **CVSS score** and **severity level** for found vulnerabilities.
+  * **Advanced Filtering**: Filter results by:
+      * Number of days (`-d`)
+      * Number of results (`-n`)
+      * Vendor (`-s` or `--search-vendor`)
+  * **Vendor Statistics**: Displays a Top `N` list of the most frequent vendors in the KEV catalog.
+  * **Multiple Output Formats (Idea 2)**: Display results in the `console` or export them as `json` or `csv` to integrate with other tools.
 
----
+-----
 
-## 🛠️ Installation et Configuration
+## 🛠️ Installation and Configuration
 
-### 1. Prérequis
+### 1\. Prerequisites
 
-* Python 3.7+
-* Git
+  * Python 3.7+
+  * Git
 
-### 2. Installation
+### 2\. Installation
 
-1.  Clonez le dépôt :
+1.  Clone the repository:
+
     ```bash
-    git clone [https://github.com/](https://github.com/)[VOTRE_NOM_UTILISATEUR]/[NOM_DU_PROJET].git
-    cd [NOM_DU_PROJET]
+    git clone https://github.com/antoineburet/CISA-KEV-Analyzer.git
+    cd CISA-KEV-Analyzer
     ```
 
-2.  (Recommandé) Créez un environnement virtuel :
+2.  (Recommended) Create a virtual environment:
+
     ```bash
     python3 -m venv venv
-    source venv/bin/activate  # Sur Windows: .\venv\Scripts\activate
+    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
     ```
 
-3.  Installez les dépendances :
+3.  Install the dependencies:
+
     ```bash
     pip install -r requirements.txt
     ```
 
-### 3. Configuration (Importante !)
+### 3\. Configuration (Important\!)
 
-L'enrichissement CVSS (`--enrich`) interroge l'API NVD, qui impose des **limites de requêtes (rate limits)**.
+CVSS enrichment (`--enrich`) queries the NVD API, which enforces **rate limits**.
 
-* **Sans clé API** : Vous serez limité à ~5 requêtes par 30 secondes. L'enrichissement sera **très lent**.
-* **Avec une clé API (Gratuite)** : Vous pouvez effectuer ~50 requêtes par 30 secondes.
+  * **Without an API key**: You will be limited to \~5 requests per 30 seconds. Enrichment will be **very slow**.
+  * **With a (Free) API key**: You can make \~50 requests per 30 seconds.
 
-**Il est fortement recommandé d'obtenir une clé API NVD :**
+**It is highly recommended to get an NVD API key:**
 
-1.  Allez sur la [page NVD API](https://nvd.nist.gov/developers/request-an-api-key) et demandez une clé.
-2.  Exportez votre clé comme variable d'environnement.
+1.  Go to the [NVD API page](https://nvd.nist.gov/developers/request-an-api-key) and request a key.
 
-    * **Sur macOS/Linux :**
+2.  Export your key as an environment variable.
+
+      * **On macOS/Linux:**
         ```bash
-        export NVD_API_KEY="VOTRE_CLE_API_NVD_ICI"
+        export NVD_API_KEY="YOUR_NVD_API_KEY_HERE"
         ```
-    * **Sur Windows (PowerShell) :**
+      * **On Windows (PowerShell):**
         ```powershell
-        $Env:NVD_API_KEY = "VOTRE_CLE_API_NVD_ICI"
+        $Env:NVD_API_KEY = "YOUR_NVD_API_KEY_HERE"
         ```
 
-Le script `kev_analyzer.py` détectera et utilisera automatiquement cette clé.
+The `kev_analyzer.py` script will automatically detect and use this key.
 
----
+-----
 
-## 📖 Exemples d'utilisation
+## 📖 Usage Examples
 
-➡️ **Afficher l'aide**
+➡️ **Show the help menu**
+
 ```bash
 python3 kev_analyzer.py -h
 ```
 
-➡️ **Utilisation de base** (Affiche les 5 dernières vulnérabilités des 30 derniers jours et le Top 10 des fournisseurs)
+➡️ **Basic usage**
+*(Shows the last 5 vulnerabilities from the last 30 days and the Top 10 vendors)*
+
 ```bash
 python3 kev_analyzer.py
 ```
 
-➡️ **Enrichissement CVSS** (Affiche les 2 dernières vulnérabilités des 60 derniers jours, AVEC leur score CVSS)
+➡️ **CVSS Enrichment**
+*(Shows the last 2 vulnerabilities from the last 60 days, WITH their CVSS score)*
+
 ```bash
 python3 kev_analyzer.py -n 2 -d 60 --enrich
 ```
-Sortie attendue :
-```bash
-[INFO] Enrichissement CVSS pour 2 vulnérabilité(s). (Cela peut prendre du temps...)
-[INFO] [1/2] Traitement CVE-202X-XXXXX...
-[INFO] Enrichissement CVSS pour CVE-202X-XXXXX (Appel API NVD...)
-[INFO] [2/2] Traitement CVE-202X-YYYYY...
 
---- 1. Analyse des vulnérabilités (Total: 2) ---
+*Expected output:*
+
+```bash
+[INFO] Enriching CVSS for 2 vulnerability(s). (This may take time...)
+[INFO] [1/2] Processing CVE-202X-XXXXX...
+[INFO] Enriching CVSS for CVE-202X-XXXXX (NVD API Call...)
+[INFO] [2/2] Processing CVE-202X-YYYYY...
+
+--- 1. Vulnerability Analysis (Total: 2) ---
 
   CVE ID:         CVE-202X-XXXXX
-  Score CVSS:     9.8 (CRITICAL)
+  CVSS Score:     9.8 (CRITICAL)
   Vendor/Product: Microsoft / Windows
   Date Added:     2025-11-14
 
   CVE ID:         CVE-202X-YYYYY
-  Score CVSS:     7.5 (HIGH)
+  CVSS Score:     7.5 (HIGH)
   Vendor/Product: Apple / iOS
   Date Added:     2025-11-12
 ...
 ```
 
-➡️ **Recherche par fournisseur et export JSON** (Trouve les 10 dernières vulnérabilités "Microsoft" des 180 derniers jours et sauvegarde tout en JSON)
+➡️ **Search by vendor and export to JSON**
+*(Finds the last 10 "Microsoft" vulnerabilities from the last 180 days and saves everything to JSON)*
+
 ```bash
 python3 kev_analyzer.py -n 10 -d 180 -s "Microsoft" -f json -o microsoft_report.json
 ```
 
-➡️ **Export CSV de toutes les vulnérabilités "Fortinet"** (Le -n 9999 sert à récupérer "toutes" les entrées)
+➡️ **Export all "Fortinet" vulnerabilities to CSV**
+*(The `-n 9999` is used to retrieve "all" entries)*
+
 ```bash
 python3 kev_analyzer.py -n 9999 -d 3650 -s "Fortinet" -f csv -o fortinet.csv
 ```
 
-➡️ **Forcer le rafraîchissement des caches**
+➡️ **Force refresh the caches**
+
 ```bash
 python3 kev_analyzer.py --force-refresh
 ```
