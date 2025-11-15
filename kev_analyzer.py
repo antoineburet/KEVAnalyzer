@@ -27,7 +27,6 @@ from collections import Counter
 from typing import List, Dict, Any, Optional
 
 # --- Logging Configuration ---
-# Use logging instead of print() for professional handling
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 # --- Constants ---
@@ -118,7 +117,7 @@ class KevAnalyzer:
 
     def _get_cvss_score(self, cve_id: str) -> Dict[str, Any]:
         """
-        (IDEA 1) CVSS enrichment for a single CVE.
+        CVSS enrichment for a single CVE.
         Uses its own cache.
         """
         # 1. Check cache first
@@ -243,7 +242,7 @@ class KevAnalyzer:
 
     def format_output(self, vuln_data: List[Dict], stats_data: List[tuple], output_format: str, output_file: Optional[str]):
         """
-        (IDEA 2) Manages data output (console, JSON, CSV).
+        Manages data output (console, JSON, CSV).
         """
         # Prepare data container
         output_data = {
