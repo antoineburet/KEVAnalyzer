@@ -1,8 +1,8 @@
 # CISA KEV Analyzer 🛡️
 
-This tool is a Python command-line script to query, analyze, and enrich the CISA **Known Exploited Vulnerabilities (KEV)** catalog.
+This tool is a Python command-line script to query, analyze, and enrich the CISA [**Known Exploited Vulnerabilities (KEV)**](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) catalog.
 
-Originally a simple technical challenge for an internship interview, this project was expanded into a complete portfolio piece, demonstrating API management, caching, data enrichment (via NVD), and structured output.
+Originally a simple technical challenge for an internship interview, this project was expanded into a complete piece, demonstrating API management, caching, data enrichment (via NVD), and structured output.
 
 -----
 
@@ -10,13 +10,13 @@ Originally a simple technical challenge for an internship interview, this projec
 
   * **KEV Querying**: Fetches the most recent list of actively exploited vulnerabilities.
   * **Smart Caching**: Uses a local cache for both KEV and CVSS data to minimize API calls and speed up executions.
-  * **CVSS Enrichment (Idea 1)**: Queries the NIST NVD 2.0 API to retrieve the **CVSS score** and **severity level** for found vulnerabilities.
+  * **CVSS Enrichment**: Queries the NIST NVD 2.0 API to retrieve the **CVSS score** and **severity level** for found vulnerabilities.
   * **Advanced Filtering**: Filter results by:
       * Number of days (`-d`)
       * Number of results (`-n`)
       * Vendor (`-s` or `--search-vendor`)
   * **Vendor Statistics**: Displays a Top `N` list of the most frequent vendors in the KEV catalog.
-  * **Multiple Output Formats (Idea 2)**: Display results in the `console` or export them as `json` or `csv` to integrate with other tools.
+  * **Multiple Output Formats**: Display results in the `console` or export them as `json` or `csv` to integrate with other tools.
 
 -----
 
@@ -32,8 +32,8 @@ Originally a simple technical challenge for an internship interview, this projec
 1.  Clone the repository:
 
     ```bash
-    git clone https://github.com/antoineburet/CISA-KEV-Analyzer.git
-    cd CISA-KEV-Analyzer
+    git clone https://github.com/antoineburet/cisa-kev-analyzer.git
+    cd cisa-kev-analyzer
     ```
 
 2.  (Recommended) Create a virtual environment:
