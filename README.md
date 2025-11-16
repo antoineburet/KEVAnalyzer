@@ -1,3 +1,5 @@
+<img width="1337" height="778" alt="cisa-kev-analyzer-screenshot" src="https://github.com/user-attachments/assets/0c7e44b2-d626-4b3c-873b-098f84a576fc" />
+
 # CISA KEV Analyzer 🛡️
 
 This tool is a Python command-line script to query, analyze, and enrich the CISA [**Known Exploited Vulnerabilities (KEV)**](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) catalog.
