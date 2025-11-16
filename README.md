@@ -1,4 +1,4 @@
-<img width="1337" height="778" alt="cisa-kev-analyzer-screenshot" src="https://github.com/user-attachments/assets/0c7e44b2-d626-4b3c-873b-098f84a576fc" />
+<img width="1337" height="769" alt="cisa-kev-analyzer-screenshot" src="https://github.com/user-attachments/assets/4e4c3176-9e8f-471a-b3ff-45ccd53a4085" />
 
 # CISA KEV Analyzer 🛡️
 
